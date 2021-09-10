@@ -1,5 +1,5 @@
 # Tha Toolkit
-# made by SamuR4II & <insert gay name here>
+# made by SamuR4II
 
 # Modules
 from time import sleep
@@ -19,12 +19,50 @@ def main():
 
 # configure Network settings
 def Configure_NetSettings(iface):
+
+    space = ' ' * 2
     
-    print('ur netDevice is : ' + iface)
+    print('chosen interface: ' + iface, '\n')
+    
+    # set ip address
+    os.system("ifconfig | grep 'inet.*broadcast'")      # print out only those interfaces that are configured to have an IP
+    print('\n')
+    IpAddress = str(input(space + "set ip address:"))
+
+    # set subnetmask
+    SubnetMask = str(input(space + "set netmask   :"))
+
+    # set network gateway
+    Gateway = str(input(space + "set gateway   :"))
+
+    clear()
+    print('\n', space,"setting ip and netmask...")
+    sleep(0.5)
+
+    # Set the Ipaddress & Netmask
+    os.system("ifconfig " + iface + " " + IpAddress + ' netmask ' + SubnetMask)
+
+    print('\n', space, "setting gateway...")
+    sleep(0.5)
+
+    # Set the gateway
+    os.system("ifconfig add default gw " + Gateway + ' ' + iface)
+
+    clear()
+    print('\n', space, "Done!")
+    
+
+    
 
 # for testing purposes
 def Help():
-    print('there is no help')
+    
+    space = ' ' * 2
+
+    print(space, 'usage:\n', space*4,
+        '-sns <Interface> ', space*2, ' | Set Network Settings\n', space*4,
+        '-a'
+    )
 
 
 
@@ -39,5 +77,4 @@ if True:
             Configure_NetSettings(str(sys.argv[2]))
 
     except Exception as e:
-        clear()
-        Help()
+        print(str(e))
