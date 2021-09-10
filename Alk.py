@@ -12,9 +12,7 @@ import glob
 def clear():
     _ = system('clear')
 
-# What's gonna run first
-def main():
-    pass
+
 
 
 # configure Network settings
@@ -52,19 +50,35 @@ def Configure_NetSettings(iface):
     print('\n', space, "Done!")
     
 
-    
+# change from static to dynamic (DHCP)
+def Dhcp(iface):
 
-# for testing purposes
+    space = ' ' * 2
+    
+    print(space, 'chosen interface: ' + iface, '\n')
+    sleep(0.6)
+    print(space, 'changing to dynamic...')
+    sleep(0.7)
+    
+    # DHCP
+    os.system("ifconfig " + iface + " 0.0.0.0 0.0.0.0 && dhclient")
+
+    clear()
+    print('\n', space, "Done!")
+
+
+# Tha Help 
 def Help():
     
     space = ' ' * 2
 
     print(space, 'usage:\n', space*4,
         '-sns <Interface> ', space*2, ' | Set Network Settings\n', space*4,
-        '-a'
+        '-dh <Interface>  ', space*2, ' | change from static to dynamic\n', space*4,
     )
 
 
+# -- Tha arguments --
 
 if True:
 
@@ -75,6 +89,9 @@ if True:
 
         if sys.argv[1] == "-sns":
             Configure_NetSettings(str(sys.argv[2]))
+
+        if sys.argv[1] == "-dh":
+            Dhcp(str(sys.argv[2]))
 
     except Exception as e:
         
