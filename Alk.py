@@ -77,4 +77,7 @@ if True:
             Configure_NetSettings(str(sys.argv[2]))
 
     except Exception as e:
-        print(str(e))
+        
+        space = ' ' * 2
+        
+        print(space, "-h for help")
